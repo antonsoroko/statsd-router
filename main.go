@@ -13,7 +13,7 @@ var (
 	configFile       = flag.String("config", "statsd-router.json", "Configuration file path")
 	bindAddress      = flag.String("bind-address", "0.0.0.0", "Address to bind")
 	port             = flag.Uint("port", 48125, "Port to use")
-	apiPort          = flag.Uint("api-port", 48126, "Port to use")
+	apiPort          = flag.Uint("api-port", 48126, "Port for API to use")
 	masterHostString = flag.String("master-statsd-host", "localhost:8125:8126", "Host that will receive all metrics. Format is host:port:mgmt_port")
 	checkInterval    = flag.Int64("check-interval", 180, "Interval of checking for backend health")
 	debug            = flag.Bool("debug", false, "Enable debug mode")

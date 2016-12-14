@@ -6,7 +6,7 @@ Rule based statsd router written in Go.
 $ ./statsd-router -h
 Usage of ./statsd-router:
   -api-port uint
-    	Port to use (default 48126)
+    	Port for API to use (default 48126)
   -bind-address string
     	Address to bind (default "0.0.0.0")
   -check-interval int
