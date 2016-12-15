@@ -20,6 +20,9 @@ const (
 // Debug?
 var DebugMode bool
 
+// Should we print internal stats to the console?
+var PrintStats bool
+
 // Counter for packets
 var Count float32 = 0
 
@@ -104,7 +107,9 @@ func StartMainListener(bindAddress string, port uint16, routingMap *RoutingMap, 
 	timeout := float32(10.0)
 	tick := time.Tick(time.Duration(timeout) * time.Second)
 	padding := strings.Repeat("-", 5)
-	if DebugMode {
+	// I tried to use channel, sync.Mutex, sync/atomic to make Count thread-safe
+	// but because of their slowness I finally agreed to lose some values...
+	if PrintStats {
 		go func() {
 			for _ = range tick {
 				fmt.Printf("%[2]s We got %[1]f packets - %[3]f packets/sec %[2]s\n", Count, padding, Count/timeout)
@@ -121,6 +126,8 @@ func StartMainListener(bindAddress string, port uint16, routingMap *RoutingMap, 
 		}
 		if DebugMode {
 			log.Printf("received data from=%s len=%d", clientAddr, packetLength)
+		}
+		if PrintStats {
 			Count++
 		}
 		packetsChannel <- buf[0:packetLength]

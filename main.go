@@ -17,6 +17,7 @@ var (
 	masterHostString = flag.String("master-statsd-host", "localhost:8125:8126", "Host that will receive all metrics. Format is host:port:mgmt_port")
 	checkInterval    = flag.Int64("check-interval", 180, "Interval of checking for backend health")
 	debug            = flag.Bool("debug", false, "Enable debug mode")
+	printStats       = flag.Bool("print-stats", false, "Enable printing internal statistics to the console")
 )
 
 func main() {
@@ -27,6 +28,7 @@ func main() {
 	}
 	log.Printf("Using %+v as master host", masterHost)
 	statsdrouter.DebugMode = *debug
+	statsdrouter.PrintStats = *printStats
 
 	quit := make(chan bool)
 
