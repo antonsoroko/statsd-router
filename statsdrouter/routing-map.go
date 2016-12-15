@@ -37,7 +37,11 @@ func (routingMap *RoutingMap) UpdateRoutingMap(config *RouterConfig) error {
 	var needAdd bool
 	for rule, nodes := range config.Rules {
 		if _, ok := routingMap.Map[rule]; !ok {
-			ruleRegexp := regexp.MustCompile(rule)
+			ruleRegexp, err := regexp.Compile(rule)
+			if err != nil {
+				log.Printf("Failed to Update RoutingMap with rule %s: %s", rule, err)
+				return err
+			}
 			routingMap.Map[rule] = &RoutingRule{Regexp: ruleRegexp}
 		}
 		for _, node := range nodes {
