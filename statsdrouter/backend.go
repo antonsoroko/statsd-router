@@ -190,7 +190,11 @@ Retry:
 	if backend.ManagementConn == nil {
 		err = backend.OpenManagementConnection()
 		if err != nil || backend.ManagementConn == nil {
-			log.Printf("Failed to OpenManagementConnection for %s: %s", backend, err)
+			if err != nil {
+				log.Printf("Failed to OpenManagementConnection for %s: %s", backend, err)
+			} else {
+				log.Printf("Failed to OpenManagementConnection for %s: the connection is still not initialized", backend)
+			}
 			retryCount++
 			log.Printf("Retry #%d for %s", retryCount, backend)
 			goto Retry
